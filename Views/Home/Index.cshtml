@@ -2,5 +2,29 @@
     ViewData["Title"] = "El Mesón de la Tía";
 }
 
-<div style="background-color:#1e1e1e; height:100vh;">
-</div>
+@{
+    ViewData["Title"] = "Home";
+}
+
+<header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container d-flex align-items-center justify-content-between">
+
+        <a href="/" class="logo d-flex align-items-center">
+            <h1 class="sitename">Yummy</h1>
+            <span>.</span>
+        </a>
+
+        <nav class="navmenu">
+            <ul>
+                <li><a href="#hero" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+
+        <a class="btn-getstarted" href="#book-a-table">Book a Table</a>
+
+    </div>
+</header>
+
