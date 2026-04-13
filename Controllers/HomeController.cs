@@ -28,5 +28,22 @@ namespace MesonConnect.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpPost]
+        public IActionResult BookTable(string Name, string Email, string Phone, DateTime Date, string Time, int People, string Message)
+        {
+            // Aquí luego puedes guardar en BD
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Contact(string Name, string Email, string Subject, string Message)
+        {
+            // Aquí puedes guardar en BD o enviar correo
+
+            ViewBag.Message = "Mensaje enviado correctamente";
+            return View("Index");
+        }
     }
 }
