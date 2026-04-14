@@ -22,7 +22,7 @@
     <link href="~/assets/css/main.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="@ViewData["BodyClass"]">
     @await Html.PartialAsync("_Header")
 
     @RenderBody()
