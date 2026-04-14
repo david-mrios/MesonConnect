@@ -1,0 +1,155 @@
+﻿<section id="menu" class="menu section">
+
+    <!-- Section Title -->
+    <div class="container section-title">
+        <h2>Our Menu</h2>
+        <p><span>Check Our</span> <span class="description-title">Yummy Menu</span></p>
+    </div>
+
+    <div class="container">
+
+        <!-- Tabs -->
+        <ul class="nav nav-tabs d-flex justify-content-center">
+
+            <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#menu-starters">
+                    <h4>Starters</h4>
+                </button>
+            </li>
+
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-breakfast">
+                    <h4>Breakfast</h4>
+                </button>
+            </li>
+
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-lunch">
+                    <h4>Lunch</h4>
+                </button>
+            </li>
+
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-dinner">
+                    <h4>Dinner</h4>
+                </button>
+            </li>
+
+        </ul>
+
+        <!-- Content -->
+        <div class="tab-content">
+
+            <!-- STARTERS -->
+            <div class="tab-pane fade show active" id="menu-starters">
+
+                <div class="tab-header text-center">
+                    <p>Menu</p>
+                    <h3>Starters</h3>
+                </div>
+
+                <div class="row gy-5">
+
+                    @for (int i = 1; i <= 6; i++)
+                    {
+                        <div class="col-lg-4 menu-item">
+                            <img src="~/assets/img/menu/menu-item-@(i).png" class="menu-img img-fluid" alt="">
+                            <h4>Plato @i</h4>
+                            <p class="ingredients">
+                                Ingredientes ejemplo
+                            </p>
+                            <p class="price">
+                                $@((i * 5) + 0.95)
+                            </p>
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+            <!-- BREAKFAST -->
+            <div class="tab-pane fade" id="menu-breakfast">
+
+                <div class="tab-header text-center">
+                    <p>Menu</p>
+                    <h3>Breakfast</h3>
+                </div>
+
+                <div class="row gy-5">
+
+                    @for (int i = 1; i <= 6; i++)
+                    {
+                        <div class="col-lg-4 menu-item">
+                            <img src="~/assets/img/menu/menu-item-@(i).png" class="menu-img img-fluid" alt="">
+                            <h4>Breakfast @i</h4>
+                            <p class="ingredients">
+                                Desayuno ejemplo
+                            </p>
+                            <p class="price">
+                                $@((i * 4) + 0.95)
+                            </p>
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+            <!-- LUNCH -->
+            <div class="tab-pane fade" id="menu-lunch">
+
+                <div class="tab-header text-center">
+                    <p>Menu</p>
+                    <h3>Lunch</h3>
+                </div>
+
+                <div class="row gy-5">
+
+                    @for (int i = 1; i <= 6; i++)
+                    {
+                        <div class="col-lg-4 menu-item">
+                            <img src="~/assets/img/menu/menu-item-@(i).png" class="menu-img img-fluid" alt="">
+                            <h4>Lunch @i</h4>
+                            <p class="ingredients">
+                                Almuerzo ejemplo
+                            </p>
+                            <p class="price">
+                                $@((i * 6) + 0.95)
+                            </p>
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+            <!-- DINNER -->
+            <div class="tab-pane fade" id="menu-dinner">
+
+                <div class="tab-header text-center">
+                    <p>Menu</p>
+                    <h3>Dinner</h3>
+                </div>
+
+                <div class="row gy-5">
+
+                    @for (int i = 1; i <= 6; i++)
+                    {
+                        <div class="col-lg-4 menu-item">
+                            <img src="~/assets/img/menu/menu-item-@(i).png" class="menu-img img-fluid" alt="">
+                            <h4>Dinner @i</h4>
+                            <p class="ingredients">
+                                Cena ejemplo
+                            </p>
+                            <p class="price">
+                                $@((i * 7) + 0.95)
+                            </p>
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
