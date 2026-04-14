@@ -260,23 +260,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // GALLERY (🔥 ESTE ES EL TUYO)
-    new Swiper('.gallery-slider', {
-        loop: true,
-        speed: 600,
-        autoplay: { delay: 4000 },
-     
-
-        breakpoints: {
-            320: { slidesPerView: 1 },
-            768: { slidesPerView: 3  },
-            1200: { slidesPerView: 5 }
-        },
-
-        pagination: {
-            el: '.gallery .swiper-pagination',
-            clickable: true
-        }
-    });
+  
 
 });

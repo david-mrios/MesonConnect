@@ -1511,11 +1511,14 @@ section,
   height: auto;
 }
 
-.gallery .swiper-pagination {
-  margin-top: 20px;
-  position: relative;
+.swiper-pagination {
+    position: relative !important;
+    margin-top: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
 .gallery .swiper-pagination .swiper-pagination-bullet {
   background-color: color-mix(in srgb, var(--default-color), transparent 85%);
   border: 0;
@@ -1529,24 +1532,16 @@ section,
   opacity: 1;
 }
 
-.gallery .swiper-slide-active {
-  text-align: center;
-}
+
 
 @media (min-width: 992px) {
   .gallery .swiper-wrapper {
     padding: 40px 0;
   }
 
-  .gallery .swiper-slide-active {
-    background: var(--background-color);
-    border: 6px solid var(--accent-color);
-    padding: 4px;
-    z-index: 1;
-    transform: scale(1.2);
-    transition: none;
-  }
+
 }
+
 
 /*--------------------------------------------------------------
 # Contact Section
