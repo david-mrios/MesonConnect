@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MensonConnect</title>
+    <title>MensonConnect</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -25,6 +25,10 @@
 <body class="@ViewData["BodyClass"]">
     @await Html.PartialAsync("_Header")
 
+   
+   
+
+
     @RenderBody()
 
         <!-- JS -->
@@ -37,6 +41,149 @@
     <script src="@Url.Content("~/assets/js/main.js")"></script>
     @await Html.PartialAsync("_Footer")
 
+
+    @{
+        var controller = Context.Request.RouteValues["controller"]?.ToString();
+        var action = Context.Request.RouteValues["action"]?.ToString();
+    }
+
+    @if (!(string.Equals(controller, "Auth", StringComparison.OrdinalIgnoreCase)
+        && string.Equals(action, "Login", StringComparison.OrdinalIgnoreCase)))
+    {
+        <!-- 🛒 BOTON -->
+        <button id="cartToggle" class="cart-float-btn">
+            🛒 <span id="cartCount">0</span>
+        </button>
+
+        <!-- 🛒 SIDEBAR -->
+        <div id="cartSidebar" class="cart-sidebar">
+
+            <div class="cart-header">
+                <h4>🛒 Tu Pedido</h4>
+                <button class="close-cart" onclick="toggleCart()">✖</button>
+            </div>
+
+            <ul id="cartItems"></ul>
+
+            <hr>
+
+            <h5>Total: $<span id="cartTotal">0.00</span></h5>
+
+            <button class="btn btn-success w-100 mt-2">
+                Realizar Pedido
+            </button>
+
+        </div>
+        }
 </body>
 
+
+
 </html>
+<script>
+    let cart = [];
+
+    // ABRIR / CERRAR
+    function toggleCart() {
+        document.getElementById("cartSidebar").classList.toggle("active");
+    }
+
+    // CLICK BOTON
+    document.getElementById("cartToggle").addEventListener("click", toggleCart);
+
+    // AGREGAR PRODUCTO (GLOBAL)
+    document.addEventListener("click", function (e) {
+
+        if (e.target.classList.contains("add-to-cart")) {
+
+            let item = {
+                id: Date.now(),
+                name: e.target.dataset.name,
+                price: parseFloat(e.target.dataset.price)
+            };
+
+            cart.push(item);
+            updateCart();
+
+            // abrir automático
+            document.getElementById("cartSidebar").classList.add("active");
+        }
+
+    });
+
+    // ELIMINAR
+    function removeItem(id) {
+        cart = cart.filter(x => x.id !== id);
+        updateCart();
+    }
+
+    // ACTUALIZAR
+    function updateCart() {
+
+        let list = document.getElementById("cartItems");
+        let total = 0;
+
+        list.innerHTML = "";
+
+        cart.forEach(item => {
+            total += item.price;
+
+            list.innerHTML += `
+                <li>
+                    ${item.name} - $${item.price.toFixed(2)}
+                    <button class="remove-item" onclick="removeItem(${item.id})">🗑</button>
+                </li>
+            `;
+        });
+
+        document.getElementById("cartTotal").innerText = total.toFixed(2);
+        document.getElementById("cartCount").innerText = cart.length;
+    }
+
+    //
+    // 🔥 DRAG PRO (NO SE ROMPE CON ZOOM + FUNCIONA EN MOVIL)
+    //
+    const btn = document.getElementById("cartToggle");
+
+    let isDragging = false;
+    let startX, startY;
+    let currentX = 0;
+    let currentY = 0;
+
+    function startDrag(e) {
+        isDragging = true;
+
+        const event = e.touches ? e.touches[0] : e;
+
+        startX = event.clientX - currentX;
+        startY = event.clientY - currentY;
+
+        btn.style.cursor = "grabbing";
+    }
+
+    function drag(e) {
+        if (!isDragging) return;
+
+        const event = e.touches ? e.touches[0] : e;
+
+        currentX = event.clientX - startX;
+        currentY = event.clientY - startY;
+
+        btn.style.transform = `translate(${currentX}px, ${currentY}px)`;
+    }
+
+    function endDrag() {
+        isDragging = false;
+        btn.style.cursor = "grab";
+    }
+
+    // PC
+    btn.addEventListener("mousedown", startDrag);
+    document.addEventListener("mousemove", drag);
+    document.addEventListener("mouseup", endDrag);
+
+    // 📱 MOBILE
+    btn.addEventListener("touchstart", startDrag);
+    document.addEventListener("touchmove", drag);
+    document.addEventListener("touchend", endDrag);
+</script>

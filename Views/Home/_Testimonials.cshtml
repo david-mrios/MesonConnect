@@ -1,11 +1,25 @@
 ﻿<section id="testimonials" class="testimonials section light-background">
 
-    <!-- Section Title -->
-    <div class="container section-title">
+    <div class="container section-title position-relative text-center">
+
+        <!-- Botón -->
+        <button class="btn btn-primary d-none d-md-inline-block position-absolute top-0 end-0 mt-2 me-2"
+                id="btnAddTestimonial">
+            + Agregar Testimonio
+        </button>
+
+        <!-- Título -->
         <h2>TESTIMONIALS</h2>
         <p>What Are They <span class="description-title">Saying About Us</span></p>
-    </div>
 
+        <!-- Botón mobile -->
+        <div class="d-md-none mt-3">
+            <button class="btn btn-primary" id="btnAddTestimonialMobile">
+                + Agregar Testimonio
+            </button>
+        </div>
+
+    </div>
     <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="swiper">
@@ -84,7 +98,141 @@
             <div class="swiper-pagination"></div>
 
         </div>
+        <!-- Botón -->
+     
+	</div>u
+
+</section>
+
+<!-- 🧾 MODAL TESTIMONIO -->
+<div id="testimonialModal" class="modal-testimonial">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h4>Agregar Testimonio</h4>
+            <button onclick="closeModal()">✖</button>
+        </div>
+
+        <input type="text" id="name" placeholder="Tu nombre" class="form-control mb-2">
+        <input type="text" id="role" placeholder="Ocupación" class="form-control mb-2">
+        <textarea id="message" placeholder="Escribe tu experiencia..." class="form-control mb-2"></textarea>
+
+        <button class="btn btn-success w-100" onclick="saveTestimonial()">
+            Guardar
+        </button>
 
     </div>
 
-</section>
+</div>
+
+<style>
+    /* FONDO OSCURO */
+    .modal-testimonial {
+        display: none;
+        position: fixed;
+        z-index: 99999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.6);
+    }
+
+    /* CONTENIDO */
+    .modal-content {
+        background: white;
+        width: 90%;
+        max-width: 400px;
+        margin: 10% auto;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    /* HEADER */
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+        .modal-header button {
+            border: none;
+            background: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
+</style>
+
+<script>
+    // ABRIR MODAL
+    document.getElementById("btnAddTestimonial")?.addEventListener("click", openModal);
+    document.getElementById("btnAddTestimonialMobile")?.addEventListener("click", openModal);
+
+    function openModal() {
+        document.getElementById("testimonialModal").style.display = "block";
+    }
+
+    // CERRAR
+    function closeModal() {
+        document.getElementById("testimonialModal").style.display = "none";
+    }
+
+    // GUARDAR TESTIMONIO
+    function saveTestimonial() {
+
+        let name = document.getElementById("name").value;
+        let role = document.getElementById("role").value;
+        let message = document.getElementById("message").value;
+
+        if (!name || !message) {
+            alert("Completa los campos");
+            return;
+        }
+
+            let images = [
+        "/assets/img/testimonials/testimonials-1.jpg",
+        "/assets/img/testimonials/testimonials-2.jpg",
+        "/assets/img/testimonials/testimonials-3.jpg"
+    ];
+
+    let randomImage = images[Math.floor(Math.random() * images.length)];
+
+        let newItem = `
+        <div class="swiper-slide">
+          <div class="testimonial-item">
+              <div class="row gy-4 justify-content-center">
+
+                  <div class="col-lg-6">
+                      <div class="testimonial-content">
+                          <p>
+                              <i class="bi bi-quote quote-icon-left"></i>
+                              <span>${message}</span>
+                              <i class="bi bi-quote quote-icon-right"></i>
+                          </p>
+                          <h3>${name}</h3>
+                          <h4>${role || 'Cliente'}</h4>
+                      </div>
+                  </div>
+
+                  <div class="col-lg-2 text-center">
+                      <img src="${randomImage}"
+                           class="img-fluid testimonial-img"
+                           alt="">
+                  </div>
+
+              </div>
+          </div>
+      </div>
+    `;
+
+        document.querySelector(".swiper-wrapper").insertAdjacentHTML("beforeend", newItem);
+
+        closeModal();
+
+        // limpiar
+        document.getElementById("name").value = "";
+        document.getElementById("role").value = "";
+        document.getElementById("message").value = "";
+    }
+</script>

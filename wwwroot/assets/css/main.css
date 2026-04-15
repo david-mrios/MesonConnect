@@ -1,4 +1,4 @@
-/**
+﻿/**
 * Template Name: Yummy
 * Template URL: https://bootstrapmade.com/yummy-bootstrap-restaurant-website-template/
 * Updated: Aug 07 2024 with Bootstrap v5.3.3
@@ -1649,4 +1649,81 @@ section,
 .starter-section {
   /* Add your styles here */
 }
+/* 🛒 BOTON FLOTANTE */
+.cart-float-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #e53935;
+    color: white;
+    border: none;
+    padding: 15px 18px;
+    border-radius: 50px;
+    font-size: 18px;
+    cursor: grab;
+    z-index: 9999;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transform: translate(0, 0);
+    touch-action: none;
+}
 
+    /* hover */
+    .cart-float-btn:hover {
+        background: #c62828;
+    }
+
+/* 🛒 SIDEBAR */
+.cart-sidebar {
+    position: fixed;
+    top: 0;
+    right: -320px;
+    width: 300px;
+    height: 100vh;
+    background: white;
+    border-left: 1px solid #ddd;
+    padding: 15px;
+    transition: 0.3s;
+    z-index: 9999;
+}
+
+    .cart-sidebar.active {
+        right: 0;
+    }
+
+/* HEADER */
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ❌ cerrar */
+.close-cart {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* 🗑 eliminar producto */
+.remove-item {
+    background: #ff5252;
+    border: none;
+    color: white;
+    font-size: 12px;
+    padding: 3px 6px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* LISTA */
+#cartItems {
+    list-style: none;
+    padding: 0;
+}
+
+    #cartItems li {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
