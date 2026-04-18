@@ -2,6 +2,10 @@
     ViewData["Title"] = "El Mesón de la Tía";
 }
 
+<div class="alert alert-info">
+    Estado de SQL Server: <strong>@ViewBag.CanConnect</strong>
+</div>
+
 
 @await Html.PartialAsync("_Hero")
 @await Html.PartialAsync("_About")

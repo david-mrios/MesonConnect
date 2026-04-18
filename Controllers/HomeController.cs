@@ -7,14 +7,30 @@ namespace MesonConnect.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        // 1. Añadimos el campo privado para la base de datos
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        // 2. Modificamos el constructor para recibir AMBOS: logger y context
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
+            _context = context; // Guardamos la conexión
         }
 
         public IActionResult Index()
         {
+            // 3. Prueba rápida: Si CanConnect() es true, SQL está respondiendo.
+            try
+            {
+                ViewBag.CanConnect = _context.Database.CanConnect()
+                    ? "Conexión Exitosa"
+                    : "No se pudo conectar (¿Creaste la BD?)";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.CanConnect = "Error: " + ex.Message;
+            }
+
             return View();
         }
 
