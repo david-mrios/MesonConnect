@@ -2,8 +2,8 @@
 
     <!-- Título -->
     <div class="container section-title">
-        <h2>Contact</h2>
-        <p><span>Need Help?</span> <span class="description-title">Contact Us</span></p>
+        <h2>Contacto</h2>
+        <p><span>¿Necesitas ayuda?</span> <span class="description-title">Contáctanos</span></p>
     </div>
 
     <div class="container">
@@ -23,7 +23,7 @@
                 <div class="info-item d-flex align-items-center">
                     <i class="icon bi bi-geo-alt flex-shrink-0"></i>
                     <div>
-                        <h3>Address</h3>
+                        <h3>Ubicación</h3>
                         <p>Managua, Nicaragua</p>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                 <div class="info-item d-flex align-items-center">
                     <i class="icon bi bi-telephone flex-shrink-0"></i>
                     <div>
-                        <h3>Call Us</h3>
+                        <h3>Pedidos y Contacto</h3>
                         <p>+505 1234 5678</p>
                     </div>
                 </div>
@@ -43,8 +43,8 @@
                 <div class="info-item d-flex align-items-center">
                     <i class="icon bi bi-envelope flex-shrink-0"></i>
                     <div>
-                        <h3>Email Us</h3>
-                        <p>info@yummy.com</p>
+                        <h3>Correo</h3>
+                        <p>mesondelatia@gmail.com</p>
                     </div>
                 </div>
             </div>
@@ -53,37 +53,37 @@
                 <div class="info-item d-flex align-items-center">
                     <i class="icon bi bi-clock flex-shrink-0"></i>
                     <div>
-                        <h3>Opening Hours</h3>
-                        <p><strong>Mon-Sat:</strong> 11AM - 10PM</p>
+                        <h3>Horario</h3>
+                        <p><strong>Lunes - Domingo:</strong> 10AM - 10PM</p>
                     </div>
                 </div>
             </div>
 
         </div>
 
-        <!-- FORMULARIO (MVC) -->
+        <!-- FORMULARIO -->
         <form method="post" asp-action="Contact" asp-controller="Home">
 
             <div class="row gy-4 mt-3">
 
                 <div class="col-md-6">
-                    <input type="text" name="Name" class="form-control" placeholder="Your Name" required>
+                    <input type="text" name="Name" class="form-control" placeholder="Tu nombre" required>
                 </div>
 
                 <div class="col-md-6">
-                    <input type="email" name="Email" class="form-control" placeholder="Your Email" required>
+                    <input type="email" name="Email" class="form-control" placeholder="Tu correo" required>
                 </div>
 
                 <div class="col-md-12">
-                    <input type="text" name="Subject" class="form-control" placeholder="Subject" required>
+                    <input type="text" name="Subject" class="form-control" placeholder="Asunto (pedido, consulta, etc.)" required>
                 </div>
 
                 <div class="col-md-12">
-                    <textarea name="Message" class="form-control" rows="6" placeholder="Message" required></textarea>
+                    <textarea name="Message" class="form-control" rows="6" placeholder="Escribe tu mensaje o pedido..." required></textarea>
                 </div>
 
                 <div class="col-md-12 text-center">
-                    <button type="submit" class="btn btn-danger">Send Message</button>
+                    <button type="submit" class="btn btn-danger">Enviar Mensaje</button>
                 </div>
 
             </div>

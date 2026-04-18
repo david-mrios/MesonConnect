@@ -1,5 +1,5 @@
-using System.Diagnostics;
 using MesonConnect.Models;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MesonConnect.Controllers

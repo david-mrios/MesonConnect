@@ -12,7 +12,7 @@ public class AuthController : Controller
     {
         if (username == "admin" && password == "1234")
         {
-            return RedirectToAction("Index", "Home  ");
+            return RedirectToAction("Index", "Admin");
         }
 
         ViewBag.Error = "Invalid credentials";
@@ -21,7 +21,7 @@ public class AuthController : Controller
 
     [HttpPost]
     public IActionResult Register(string name, string email, string password)
-    {
+    {   
         ViewBag.Message = "User registered successfully";
         return View("Login");
     }

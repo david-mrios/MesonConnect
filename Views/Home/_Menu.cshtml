@@ -2,8 +2,8 @@
 
     <!-- Section Title -->
     <div class="container section-title">
-        <h2>Our Menu</h2>
-        <p><span>Check Our</span> <span class="description-title">Yummy Menu</span></p>
+        <h2>Menú</h2>
+        <p><span>Descubre nuestro</span> <span class="description-title">Menú Rápido</span></p>
     </div>
 
     <div class="container">
@@ -13,25 +13,25 @@
 
             <li class="nav-item">
                 <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#menu-starters">
-                    <h4>Starters</h4>
+                    <h4>Combos</h4>
                 </button>
             </li>
 
             <li class="nav-item">
                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-breakfast">
-                    <h4>Breakfast</h4>
+                    <h4>Desayunos</h4>
                 </button>
             </li>
 
             <li class="nav-item">
                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-lunch">
-                    <h4>Lunch</h4>
+                    <h4>Almuerzos</h4>
                 </button>
             </li>
 
             <li class="nav-item">
                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-dinner">
-                    <h4>Dinner</h4>
+                    <h4>Cenas</h4>
                 </button>
             </li>
 
@@ -40,12 +40,12 @@
         <!-- Content -->
         <div class="tab-content">
 
-            <!-- STARTERS -->
+            <!-- COMBOS -->
             <div class="tab-pane fade show active" id="menu-starters">
 
                 <div class="tab-header text-center">
-                    <p>Menu</p>
-                    <h3>Starters</h3>
+                    <p>Menú</p>
+                    <h3>Combos</h3>
                 </div>
 
                 <div class="row gy-5">
@@ -54,16 +54,16 @@
                     {
                         <div class="col-lg-4 menu-item">
                             <img src="~/assets/img/menu/menu-item-@(i).png" class="menu-img img-fluid" alt="">
-                            <h4>Plato @i</h4>
+                            <h4>Combo Rápido @i</h4>
                             <p class="ingredients">
-                                Ingredientes ejemplo
+                                Hamburguesa, papas fritas y bebida
                             </p>
                             <p class="price">
                                 $@((i * 5) + 0.95)
                             </p>
 
                             <button class="btn btn-primary btn-sm add-to-cart"
-                                    data-name="Plato @i"
+                                    data-name="Combo Rápido @i"
                                     data-price="@((i * 5) + 0.95)">
                                 + Agregar
                             </button>
@@ -73,12 +73,12 @@
                 </div>
             </div>
 
-            <!-- BREAKFAST -->
+            <!-- DESAYUNOS -->
             <div class="tab-pane fade" id="menu-breakfast">
 
                 <div class="tab-header text-center">
-                    <p>Menu</p>
-                    <h3>Breakfast</h3>
+                    <p>Menú</p>
+                    <h3>Desayunos</h3>
                 </div>
 
                 <div class="row gy-5">
@@ -87,17 +87,17 @@
                     {
                         <div class="col-lg-4 menu-item">
                             <img src="~/assets/img/menu/menu-item-@(i).png" class="menu-img img-fluid" alt="">
-                            <h4>Breakfast @i</h4>
+                            <h4>Desayuno Express @i</h4>
                             <p class="ingredients">
-                                Desayuno ejemplo
+                                Huevos, pan tostado y café
                             </p>
                             <p class="price">
                                 $@((i * 4) + 0.95)
                             </p>
 
                             <button class="btn btn-primary btn-sm add-to-cart"
-                                    data-name="Plato @i"
-                                    data-price="@((i * 5) + 0.95)">
+                                    data-name="Desayuno Express @i"
+                                    data-price="@((i * 4) + 0.95)">
                                 + Agregar
                             </button>
                         </div>
@@ -106,12 +106,12 @@
                 </div>
             </div>
 
-            <!-- LUNCH -->
+            <!-- ALMUERZOS -->
             <div class="tab-pane fade" id="menu-lunch">
 
                 <div class="tab-header text-center">
-                    <p>Menu</p>
-                    <h3>Lunch</h3>
+                    <p>Menú</p>
+                    <h3>Almuerzos</h3>
                 </div>
 
                 <div class="row gy-5">
@@ -120,16 +120,17 @@
                     {
                         <div class="col-lg-4 menu-item">
                             <img src="~/assets/img/menu/menu-item-@(i).png" class="menu-img img-fluid" alt="">
-                            <h4>Lunch @i</h4>
+                            <h4>Almuerzo Rápido @i</h4>
                             <p class="ingredients">
-                                Almuerzo ejemplo
+                                Pollo frito con papas o arroz y ensalada
                             </p>
                             <p class="price">
                                 $@((i * 6) + 0.95)
                             </p>
+
                             <button class="btn btn-primary btn-sm add-to-cart"
-                                    data-name="Plato @i"
-                                    data-price="@((i * 5) + 0.95)">
+                                    data-name="Almuerzo Rápido @i"
+                                    data-price="@((i * 6) + 0.95)">
                                 + Agregar
                             </button>
                         </div>
@@ -138,12 +139,12 @@
                 </div>
             </div>
 
-            <!-- DINNER -->
+            <!-- CENAS -->
             <div class="tab-pane fade" id="menu-dinner">
 
                 <div class="tab-header text-center">
-                    <p>Menu</p>
-                    <h3>Dinner</h3>
+                    <p>Menú</p>
+                    <h3>Cenas</h3>
                 </div>
 
                 <div class="row gy-5">
@@ -152,9 +153,9 @@
                     {
                         <div class="col-lg-4 menu-item">
                             <img src="~/assets/img/menu/menu-item-@(i).png" class="menu-img img-fluid" alt="">
-                            <h4>Dinner @i</h4>
+                            <h4>Cena Rápida @i</h4>
                             <p class="ingredients">
-                                Cena ejemplo
+                                Hot dog, hamburguesa o tacos con bebida
                             </p>
                             <p class="price">
                                 $@((i * 7) + 0.95)
@@ -169,4 +170,4 @@
 
     </div>
 
-  </section>
+</section>

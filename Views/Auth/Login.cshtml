@@ -15,50 +15,49 @@
 
                 <!-- LOGIN -->
                 <form id="loginForm" class="active" method="post" asp-action="Login">
-                    <h2>Welcome Back 👋</h2>
+                    <h2>Bienvenido 👋</h2>
 
                     <div class="input-group">
                         <input type="text" name="username" required />
-                        <label>Username</label>
+                        <label>Usuario</label>
                     </div>
 
                     <div class="input-group">
                         <input type="password" name="password" required />
-                        <label>Password</label>
+                        <label>Contraseña</label>
                     </div>
 
                     <button type="submit">Login</button>
 
                     <p class="switch-text">
-                        Don’t have an account?
-                        <span onclick="showSignup()">Sign Up</span>
+                        ¿No tienes cuenta?
+                        <span onclick="showSignup()">Crear cuenta</span>
                     </p>
                 </form>
-
                 <!-- SIGNUP -->
                 <form id="signupForm" class="hidden" method="post" asp-action="Register">
-                    <h2>Create Account 🚀</h2>
+                    <h2>Crear Cuenta 🚀</h2>
 
                     <div class="input-group">
                         <input type="text" name="name" required />
-                        <label>Full Name</label>
+                        <label>Nombre Completo</label>
                     </div>
 
                     <div class="input-group">
                         <input type="email" name="email" required />
-                        <label>Email</label>
+                        <label>Correo Electrónico</label>
                     </div>
 
                     <div class="input-group">
                         <input type="password" name="password" required />
-                        <label>Password</label>
+                        <label>Contraseña</label>
                     </div>
 
-                    <button type="submit">Sign Up</button>
+                    <button type="submit">Registrarse</button>
 
                     <p class="switch-text">
-                        Already have an account?
-                        <span onclick="showLogin()">Login</span>
+                        ¿Ya tienes una cuenta?
+                        <span onclick="showLogin()">Iniciar sesión</span>
                     </p>
                 </form>
 
