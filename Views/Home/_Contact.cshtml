@@ -1,95 +1,289 @@
-﻿<section id="contact" class="contact section">
+﻿    @using Microsoft.AspNetCore.Http
+    @using MesonConnect.Models
 
-    <!-- Título -->
-    <div class="container section-title">
-        <h2>Contacto</h2>
-        <p><span>¿Necesitas ayuda?</span> <span class="description-title">Contáctanos</span></p>
-    </div>
+    @{
+        var usuario = Context.Session.GetString("Usuario");
+        var pedidos = ViewBag.Pedidos as List<Pedido>;
+    }
 
-    <div class="container">
+    <section id="contact" class="contact section">
 
-        <!-- MAPA -->
-        <div class="mb-5">
-            <iframe style="width: 100%; height: 400px;"
-                    src="https://www.google.com/maps?q=Managua,Nicaragua&output=embed"
-                    frameborder="0" allowfullscreen="">
-            </iframe>
+        <div class="container section-title">
+            <h2>Mi Cuenta</h2>
+            <p>
+                <span>Información de</span>
+                <span class="description-title">Mi Perfil</span>
+            </p>
         </div>
 
-        <!-- INFO -->
-        <div class="row gy-4">
+        <div class="container">
 
-            <div class="col-md-6">
-                <div class="info-item d-flex align-items-center">
-                    <i class="icon bi bi-geo-alt flex-shrink-0"></i>
-                    <div>
-                        <h3>Ubicación</h3>
-                        <p>Managua, Nicaragua</p>
-                    </div>
-                </div>
+            <div class="mb-5">
+                <iframe style="width:100%; height:400px;"
+                        src="https://maps.google.com/maps?q=12.13934298145189,-86.21092625608138&z=18&output=embed"
+                        frameborder="0"
+                        allowfullscreen>
+                </iframe>
             </div>
 
-            <div class="col-md-6">
-                <div class="info-item d-flex align-items-center">
-                    <i class="icon bi bi-telephone flex-shrink-0"></i>
-                    <div>
-                        <h3>Pedidos y Contacto</h3>
-                        <p>+505 1234 5678</p>
-                    </div>
-                </div>
-            </div>
+            <div class="row gy-4">
 
-            <div class="col-md-6">
-                <div class="info-item d-flex align-items-center">
-                    <i class="icon bi bi-envelope flex-shrink-0"></i>
-                    <div>
-                        <h3>Correo</h3>
-                        <p>mesondelatia@gmail.com</p>
-                    </div>
-                </div>
-            </div>
+                <!-- PERFIL -->
+                <div class="col-lg-4">
 
-            <div class="col-md-6">
-                <div class="info-item d-flex align-items-center">
-                    <i class="icon bi bi-clock flex-shrink-0"></i>
-                    <div>
-                        <h3>Horario</h3>
-                        <p><strong>Lunes - Domingo:</strong> 10AM - 10PM</p>
+                    <div class="card shadow-lg border-0 p-4 text-center">
+
+                        <img src="/assets/img/testimonials/testimonials-1.jpg"
+                             class="rounded-circle mx-auto mb-3"
+                             width="120"
+                             height="120"
+                             style="object-fit:cover;">
+
+                        @if (!string.IsNullOrEmpty(usuario))
+                        {
+                            <h3>@usuario</h3>
+
+                            <p class="text-muted">
+                                Cliente Registrado
+                            </p>
+
+                            <hr>
+
+                            <div class="text-start">
+
+                                <p>
+                                    <strong>Estado:</strong> Sesión Activa
+                                </p>
+
+                                <p>
+                                    <strong>Cuenta:</strong> Cliente
+                                </p>
+
+                            </div>
+                        }
+                        else
+                        {
+                            <h3>No has iniciado sesión</h3>
+
+                            <p class="text-muted">
+                                Inicia sesión para ver tu perfil.
+                            </p>
+
+                            <a asp-controller="Auth"
+                               asp-action="Login"
+                               class="btn btn-danger mt-3">
+                                Iniciar Sesión
+                            </a>
+                        }
+
                     </div>
+
                 </div>
+
+                <!-- PEDIDOS -->
+                <div class="col-lg-8">
+
+                    <div class="card shadow-lg border-0">
+
+                        <div class="card-header bg-dark">
+                            <h4 class="mb-0 text-white">
+                                Historial de Pedidos
+                            </h4>
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="table-responsive pedidos-scroll">
+                                <table class="table table-hover align-middle">
+
+                                    <thead>
+                                        <tr>
+                                            <th># Pedido</th>
+                                            <th>Fecha</th>
+                                            <th>Total</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                        @if (!string.IsNullOrEmpty(usuario) && pedidos != null && pedidos.Any())
+                                        {
+                                            @foreach (var pedido in pedidos)
+                                            {
+                                                <tr>
+
+                                                    <td>@pedido.id</td>
+
+                                                    <td>@pedido.fecha_pedido.ToString("dd/MM/yyyy")</td>
+
+                                                    <td>C$ @pedido.total</td>
+
+                                                    <td>
+
+                                                        @if (pedido.Estado == "Pendiente")
+                                                        {
+                                                            <span class="badge bg-warning text-dark">
+                                                                Pendiente
+                                                            </span>
+                                                        }
+                                                        else if (pedido.Estado == "Preparando")
+                                                        {
+                                                            <span class="badge bg-primary">
+                                                                Preparando
+                                                            </span>
+                                                        }
+                                                        else if (pedido.Estado == "Entregado")
+                                                        {
+                                                            <span class="badge bg-success">
+                                                                Entregado
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="badge bg-danger">
+                                                                Cancelado
+                                                            </span>
+                                                        }
+
+                                                    </td>
+
+                                                    <td>
+
+                                                        @if (pedido.Estado == "Pendiente")
+                                                        {
+                                                            <button class="btn btn-danger btn-sm"
+                                                                    onclick="cancelarPedido(@pedido.id)">
+                                                                Cancelar
+                                                            </button>
+                                                        }
+                                                        else
+                                                        {
+                                                            <button class="btn btn-secondary btn-sm"
+                                                                    disabled>
+                                                                Finalizado
+                                                            </button>
+                                                        }
+
+                                                    </td>
+
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="5" class="text-center">
+                                                    No hay pedidos registrados
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
 
-        <!-- FORMULARIO -->
-        <form method="post" asp-action="Contact" asp-controller="Home">
+    </section>
 
-            <div class="row gy-4 mt-3">
 
-                <div class="col-md-6">
-                    <input type="text" name="Name" class="form-control" placeholder="Tu nombre" required>
-                </div>
 
-                <div class="col-md-6">
-                    <input type="email" name="Email" class="form-control" placeholder="Tu correo" required>
-                </div>
+    <style>
 
-                <div class="col-md-12">
-                    <input type="text" name="Subject" class="form-control" placeholder="Asunto (pedido, consulta, etc.)" required>
-                </div>
+        .pedidos-scroll tbody {
+            display: block;
+            max-height: 250px;
+            overflow-y: auto;
+        }
 
-                <div class="col-md-12">
-                    <textarea name="Message" class="form-control" rows="6" placeholder="Escribe tu mensaje o pedido..." required></textarea>
-                </div>
+            .pedidos-scroll thead,
+            .pedidos-scroll tbody tr {
+                display: table;
+                width: 100%;
+                table-layout: fixed;
+            }
 
-                <div class="col-md-12 text-center">
-                    <button type="submit" class="btn btn-danger">Enviar Mensaje</button>
-                </div>
+        .card {
+            border-radius: 15px;
+        }
 
-            </div>
+        .table th {
+            font-weight: 600;
+        }
 
-        </form>
+        .badge {
+            font-size: 14px;
+            padding: 8px 12px;
+        }
 
-    </div>
+    </style>
 
-</section>
+<script>
+    async function cancelarPedido(id) {
+
+        const result = await Swal.fire({
+            title: '¿Cancelar pedido?',
+            text: 'Esta acción no se puede deshacer',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ce1212',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, cancelar',
+            cancelButtonText: 'No'
+        });
+
+        if (!result.isConfirmed) return;
+
+        fetch('/Home/CancelarPedido', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: id })
+        })
+        .then(res => res.json())
+        .then(data => {
+
+            if (data.success) {
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Pedido cancelado',
+                    timer: 1500,
+                    showConfirmButton: false
+                }).then(() => {
+                    location.reload();
+                });
+
+            } else {
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'No se pudo cancelar',
+                    text: data.mensaje || 'Error'
+                });
+            }
+        })
+        .catch(err => {
+            console.error(err);
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al conectar con el servidor'
+            });
+        });
+    }
+</script>

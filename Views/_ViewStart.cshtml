@@ -1,3 +1,12 @@
 ﻿@{
-    Layout = "_Layout";
+    var path = Context.Request.Path.Value ?? "";
+
+    if (path.Contains("/Pages/", StringComparison.OrdinalIgnoreCase))
+    {
+        Layout = "_ContentNavbarLayout";
+    }
+    else
+    {
+        Layout = "_Layout";
+    }
 }

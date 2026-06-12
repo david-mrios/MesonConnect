@@ -20,27 +20,41 @@
 
     <!-- Main CSS -->
     <link href="~/assets/css/main.css" rel="stylesheet">
+
+    <!-- Vendor Styles -->
+    @RenderSection("VendorStyles", required: false)
+
+    <!-- Page Styles -->
+    @RenderSection("PageStyles", required: false)
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
+
+
 <body class="@ViewData["BodyClass"]">
+
     @await Html.PartialAsync("_Header")
-
-   
-   
-
 
     @RenderBody()
 
-        <!-- JS -->
+    @await Html.PartialAsync("_Footer")
+
+    <!-- JS -->
     <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="@Url.Content("~/assets/vendor/aos/aos.js")"></script>
+    <script src="~/assets/vendor/aos/aos.js"></script>
     <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
     <script src="~/assets/vendor/purecounter/purecounter_vanilla.js"></script>
     <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-    <script src="@Url.Content("~/assets/js/main.js")"></script>
-    @await Html.PartialAsync("_Footer")
+    <script src="~/assets/js/main.js"></script>
 
+    <!-- Vendor Scripts -->
+    @RenderSection("VendorScripts", required: false)
+
+    <!-- Page Scripts -->
+    @RenderSection("PageScripts", required: false)
 
     @{
         var controller = Context.Request.RouteValues["controller"]?.ToString();
@@ -50,7 +64,7 @@
     @if (!(string.Equals(controller, "Auth", StringComparison.OrdinalIgnoreCase)
         && string.Equals(action, "Login", StringComparison.OrdinalIgnoreCase)))
     {
-        <!-- 🛒 BOTON -->
+        <!-- 🛒 BOTÓN -->
         <button id="cartToggle" class="cart-float-btn">
             🛒 <span id="cartCount">0</span>
         </button>
@@ -69,121 +83,199 @@
 
             <h5>Total: $<span id="cartTotal">0.00</span></h5>
 
-            <button class="btn btn-success w-100 mt-2">
+            <button class="btn btn-success w-100 mt-2"
+                    onclick="realizarPedido()">
                 Realizar Pedido
             </button>
 
         </div>
-        }
-</body>
-
-
-
-</html>
-<script>
-    let cart = [];
-
-    // ABRIR / CERRAR
-    function toggleCart() {
-        document.getElementById("cartSidebar").classList.toggle("active");
     }
 
-    // CLICK BOTON
-    document.getElementById("cartToggle").addEventListener("click", toggleCart);
+    <script>
 
-    // AGREGAR PRODUCTO (GLOBAL)
-    document.addEventListener("click", function (e) {
+        let cart = [];
 
-        if (e.target.classList.contains("add-to-cart")) {
+        function toggleCart() {
+            document.getElementById("cartSidebar").classList.toggle("active");
+        }
 
-            let item = {
-                id: Date.now(),
-                name: e.target.dataset.name,
-                price: parseFloat(e.target.dataset.price)
-            };
+        function updateCart() {
 
-            cart.push(item);
+            let list = document.getElementById("cartItems");
+            let total = 0;
+
+            list.innerHTML = "";
+
+            cart.forEach(item => {
+
+                total += item.price * item.cantidad;
+
+                list.innerHTML += `
+                    <li>
+                        ${item.name} - C$${item.price.toFixed(2)}
+
+                        <button type="button"
+                                onclick="removeItem(${item.cartId})">
+                            🗑
+                        </button>
+                    </li>
+                `;
+            });
+
+            document.getElementById("cartTotal").innerText =
+                total.toFixed(2);
+
+            document.getElementById("cartCount").innerText =
+                cart.length;
+        }
+
+        function removeItem(id) {
+
+            cart = cart.filter(x => x.cartId !== id);
+
             updateCart();
 
-            // abrir automático
-            document.getElementById("cartSidebar").classList.add("active");
+            Swal.fire({
+                icon: 'success',
+                title: 'Producto eliminado',
+                timer: 1200,
+                showConfirmButton: false
+            });
         }
 
-    });
+        window.removeItem = removeItem;
 
-    // ELIMINAR
-    function removeItem(id) {
-        cart = cart.filter(x => x.id !== id);
-        updateCart();
-    }
+        document.addEventListener("click", function (e) {
 
-    // ACTUALIZAR
-    function updateCart() {
+            if (e.target.classList.contains("add-to-cart")) {
 
-        let list = document.getElementById("cartItems");
-        let total = 0;
+                let item = {
+                    cartId: Date.now(),
+                    platilloId: parseInt(e.target.dataset.id),
+                    name: e.target.dataset.name,
+                    price: parseFloat(e.target.dataset.price),
+                    cantidad: 1
+                };
 
-        list.innerHTML = "";
+                cart.push(item);
 
-        cart.forEach(item => {
-            total += item.price;
+                updateCart();
 
-            list.innerHTML += `
-                <li>
-                    ${item.name} - $${item.price.toFixed(2)}
-                    <button class="remove-item" onclick="removeItem(${item.id})">🗑</button>
-                </li>
-            `;
+                document
+                    .getElementById("cartSidebar")
+                    .classList.add("active");
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Agregado al carrito',
+                    text: item.name,
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            }
         });
 
-        document.getElementById("cartTotal").innerText = total.toFixed(2);
-        document.getElementById("cartCount").innerText = cart.length;
-    }
+        window.realizarPedido = async function () {
 
-    //
-    // 🔥 DRAG PRO (NO SE ROMPE CON ZOOM + FUNCIONA EN MOVIL)
-    //
-    const btn = document.getElementById("cartToggle");
+            if (cart.length === 0) {
 
-    let isDragging = false;
-    let startX, startY;
-    let currentX = 0;
-    let currentY = 0;
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Carrito vacío',
+                    text: 'Agrega al menos un producto'
+                });
 
-    function startDrag(e) {
-        isDragging = true;
+                return;
+            }
 
-        const event = e.touches ? e.touches[0] : e;
+            try {
 
-        startX = event.clientX - currentX;
-        startY = event.clientY - currentY;
+                Swal.fire({
+                    title: 'Procesando pedido...',
+                    text: 'Por favor espera',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
 
-        btn.style.cursor = "grabbing";
-    }
+                const response = await fetch('/Home/CrearPedido', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(cart)
+                });
 
-    function drag(e) {
-        if (!isDragging) return;
+                const data = await response.json();
 
-        const event = e.touches ? e.touches[0] : e;
+                Swal.close();
 
-        currentX = event.clientX - startX;
-        currentY = event.clientY - startY;
+                if (data.noLogin) {
 
-        btn.style.transform = `translate(${currentX}px, ${currentY}px)`;
-    }
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Inicia sesión',
+                        text: 'Debes iniciar sesión para realizar pedidos'
+                    }).then(() => {
+                        window.location.href = "/Auth/Login";
+                    });
 
-    function endDrag() {
-        isDragging = false;
-        btn.style.cursor = "grab";
-    }
+                    return;
+                }
 
-    // PC
-    btn.addEventListener("mousedown", startDrag);
-    document.addEventListener("mousemove", drag);
-    document.addEventListener("mouseup", endDrag);
+                if (data.success) {
 
-    // 📱 MOBILE
-    btn.addEventListener("touchstart", startDrag);
-    document.addEventListener("touchmove", drag);
-    document.addEventListener("touchend", endDrag);
-</script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Pedido realizado',
+                        text: 'Tu pedido fue registrado correctamente',
+                        confirmButtonColor: '#ce1212'
+                    });
+
+                    cart = [];
+
+                    updateCart();
+
+                    document
+                        .getElementById("cartSidebar")
+                        .classList.remove("active");
+
+                    return;
+                }
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.message || 'No se pudo realizar el pedido'
+                });
+
+            }
+            catch (error) {
+
+                console.error(error);
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Ocurrió un problema al enviar el pedido'
+                });
+            }
+        };
+
+        const cartBtn = document.getElementById("cartToggle");
+
+        if (cartBtn) {
+
+            cartBtn.addEventListener("click", function () {
+
+                toggleCart();
+
+            });
+        }
+
+    </script>
+
+</body>
+</html>

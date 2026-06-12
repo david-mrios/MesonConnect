@@ -1,4 +1,11 @@
-﻿<section id="testimonials" class="testimonials section light-background">
+﻿@using Microsoft.AspNetCore.Http
+@using MesonConnect.Models
+
+@{
+    var usuario = Context.Session.GetString("Usuario");
+    var testimonios = ViewBag.Testimonios as List<Testimonio>;
+}
+<section id="testimonials" class="testimonials section light-background">
 
     <div class="container section-title position-relative text-center">
 
@@ -27,70 +34,89 @@
 
             <div class="swiper-wrapper">
 
-                <!-- Item 1 -->
-                <div class="swiper-slide">
-                    <div class="testimonial-item">
-                        <div class="row gy-4 justify-content-center">
-                            <div class="col-lg-6">
-                                <div class="testimonial-content">
-                                    <p>
-                                        <i class="bi bi-quote quote-icon-left"></i>
-                                        <span>Las hamburguesas son deliciosas y el servicio es rapidísimo.</span>
-                                        <i class="bi bi-quote quote-icon-right"></i>
-                                    </p>
-                                    <h3>Juan Pérez</h3>
-                                    <h4>Cliente frecuente</h4>
-                                </div>
-                            </div>
-                            <div class="col-lg-2 text-center">
-                                <img src="~/assets/img/testimonials/testimonials-1.jpg" class="img-fluid testimonial-img" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="swiper-wrapper">
 
-                <!-- Item 2 -->
-                <div class="swiper-slide">
-                    <div class="testimonial-item">
-                        <div class="row gy-4 justify-content-center">
-                            <div class="col-lg-6">
-                                <div class="testimonial-content">
-                                    <p>
-                                        <i class="bi bi-quote quote-icon-left"></i>
-                                        <span>Pedí por WhatsApp y llegó rápido, caliente y muy rico.</span>
-                                        <i class="bi bi-quote quote-icon-right"></i>
-                                    </p>
-                                    <h3>María López</h3>
-                                    <h4>Cliente</h4>
-                                </div>
-                            </div>
-                            <div class="col-lg-2 text-center">
-                                <img src="~/assets/img/testimonials/testimonials-2.jpg" class="img-fluid testimonial-img" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    @if (testimonios != null && testimonios.Any())
+                    {
+                        @foreach (var item in testimonios)
+                        {
+                            <div class="swiper-slide">
 
-                <!-- Item 3 -->
-                <div class="swiper-slide">
-                    <div class="testimonial-item">
-                        <div class="row gy-4 justify-content-center">
-                            <div class="col-lg-6">
-                                <div class="testimonial-content">
-                                    <p>
-                                        <i class="bi bi-quote quote-icon-left"></i>
-                                        <span>Buen precio, buena comida y siempre vuelvo con mi familia.</span>
-                                        <i class="bi bi-quote quote-icon-right"></i>
-                                    </p>
-                                    <h3>Carlos Gómez</h3>
-                                    <h4>Cliente satisfecho</h4>
+                                <div class="testimonial-item">
+
+                                    <div class="row gy-4 justify-content-center">
+
+                                        <div class="col-lg-6">
+
+                                            <div class="testimonial-content">
+
+                                                <p>
+                                                    <i class="bi bi-quote quote-icon-left"></i>
+
+                                                    <span>@item.Mensaje</span>
+
+                                                    <i class="bi bi-quote quote-icon-right"></i>
+                                                </p>
+
+                                                <h3>@item.Cliente.nombre</h3>
+                                                <h4>Cliente</h4>
+                                                <div class="mb-2">
+                                                    @for (int i = 1; i <= item.Calificacion; i++)
+                                                    {
+                                                        <span style="color:gold;font-size:20px;">⭐</span>
+                                                    }
+                                                </div>
+
+                                                
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-lg-2 text-center">
+
+                                            <img src="/assets/img/testimonials/testimonials-1.jpg"
+                                                 class="img-fluid testimonial-img"
+                                                 alt="Cliente">
+
+                                        </div>
+
+                                    </div>
+
                                 </div>
+
                             </div>
-                            <div class="col-lg-2 text-center">
-                                <img src="~/assets/img/testimonials/testimonials-3.jpg" class="img-fluid testimonial-img" alt="">
+                        }
+                    }
+                    else
+                    {
+                        <div class="swiper-slide">
+
+                            <div class="testimonial-item">
+
+                                <div class="row gy-4 justify-content-center">
+
+                                    <div class="col-lg-6">
+
+                                        <div class="testimonial-content">
+
+                                            <p>
+                                                <span>
+                                                    Aún no hay testimonios disponibles.
+                                                </span>
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
                             </div>
+
                         </div>
-                    </div>
+                    }
+
                 </div>
 
             </div>
@@ -104,6 +130,8 @@
 
 </section>
 
+
+<!-- MODAL -->
 <!-- MODAL -->
 <div id="testimonialModal" class="modal-testimonial">
 
@@ -111,14 +139,41 @@
 
         <div class="modal-header">
             <h4>Agregar Reseña</h4>
-            <button onclick="closeModal()">✖</button>
+            <button type="button" onclick="closeModal()">✖</button>
         </div>
 
-        <input type="text" id="name" placeholder="Tu nombre" class="form-control mb-2">
-        <input type="text" id="role" placeholder="Ej: Cliente frecuente" class="form-control mb-2">
-        <textarea id="message" placeholder="Cuéntanos tu experiencia..." class="form-control mb-2"></textarea>
+        <p>
+            <strong>Usuario:</strong> @usuario
+        </p>
 
-        <button class="btn btn-success w-100" onclick="saveTestimonial()">
+        <div class="mb-3">
+
+            <label class="form-label">
+                Calificación
+            </label>
+
+            <div class="rating">
+
+                <span onclick="setRating(1)">⭐</span>
+                <span onclick="setRating(2)">⭐</span>
+                <span onclick="setRating(3)">⭐</span>
+                <span onclick="setRating(4)">⭐</span>
+                <span onclick="setRating(5)">⭐</span>
+
+            </div>
+
+            <input type="hidden"
+                   id="rating"
+                   value="0" />
+
+        </div>
+
+        <textarea id="message"
+                  placeholder="Cuéntanos tu experiencia..."
+                  class="form-control mb-2"></textarea>
+
+        <button class="btn btn-success w-100"
+                onclick="saveTestimonial()">
             Guardar
         </button>
 
@@ -189,6 +244,22 @@
             background: #e65c00;
         }
 
+    .rating {
+        font-size: 35px;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+        .rating span {
+            cursor: pointer;
+            opacity: .3;
+            transition: .2s;
+        }
+
+            .rating span.active {
+                opacity: 1;
+            }
+
     /* ANIMACIÓN */
     @@keyframes zoomIn {
         from {
@@ -204,73 +275,126 @@
 </style>
 
 <script>
-    // ABRIR MODAL
-    document.getElementById("btnAddTestimonial")?.addEventListener("click", openModal);
-    document.getElementById("btnAddTestimonialMobile")?.addEventListener("click", openModal);
+
+    const usuarioLogueado = '@usuario';
+
+    const isAuthenticated =
+        usuarioLogueado !== null &&
+        usuarioLogueado !== '';
+
+    document.getElementById("btnAddTestimonial")
+        ?.addEventListener("click", openModal);
+
+    document.getElementById("btnAddTestimonialMobile")
+        ?.addEventListener("click", openModal);
 
     function openModal() {
-        document.getElementById("testimonialModal").style.display = "block";
-    }
 
-    // CERRAR
-    function closeModal() {
-        document.getElementById("testimonialModal").style.display = "none";
-    }
+        if (!isAuthenticated) {
 
-    // GUARDAR
-    function saveTestimonial() {
+            window.location.href =
+                '/Auth/Login';
 
-        let name = document.getElementById("name").value;
-        let role = document.getElementById("role").value;
-        let message = document.getElementById("message").value;
-
-        if (!name || !message) {
-            alert("Completa los campos");
             return;
         }
 
-        let images = [
-            "/assets/img/testimonials/testimonials-1.jpg",
-            "/assets/img/testimonials/testimonials-2.jpg",
-            "/assets/img/testimonials/testimonials-3.jpg"
-        ];
-
-        let randomImage = images[Math.floor(Math.random() * images.length)];
-
-        let newItem = `
-        <div class="swiper-slide">
-          <div class="testimonial-item">
-              <div class="row gy-4 justify-content-center">
-
-                  <div class="col-lg-6">
-                      <div class="testimonial-content">
-                          <p>
-                              <i class="bi bi-quote quote-icon-left"></i>
-                              <span>${message}</span>
-                              <i class="bi bi-quote quote-icon-right"></i>
-                          </p>
-                          <h3>${name}</h3>
-                          <h4>${role || 'Cliente'}</h4>
-                      </div>
-                  </div>
-
-                  <div class="col-lg-2 text-center">
-                      <img src="${randomImage}"
-                           class="img-fluid testimonial-img"
-                           alt="">
-                  </div>
-
-              </div>
-          </div>
-        </div>
-        `;
-
-        document.querySelector(".swiper-wrapper").insertAdjacentHTML("beforeend", newItem);
-
-        closeModal();
-
-        document.getElementById("name").value = "";
-        document.getElementById("role").value = "";
-        document.getElementById("message").value = "";
+        document.getElementById("testimonialModal")
+            .style.display = "block";
     }
+
+    function closeModal() {
+
+        document.getElementById("testimonialModal")
+            .style.display = "none";
+    }
+
+    function setRating(value) {
+
+        document.getElementById("rating").value = value;
+
+        const stars =
+            document.querySelectorAll(".rating span");
+
+        stars.forEach((star, index) => {
+
+            if (index < value) {
+                star.classList.add("active");
+            }
+            else {
+                star.classList.remove("active");
+            }
+
+        });
+    }
+
+    function saveTestimonial() {
+
+        let message =
+            document.getElementById("message")
+                .value.trim();
+
+        let calificacion =
+            document.getElementById("rating")
+                .value;
+
+        if (!message) {
+
+            alert("Escribe un comentario");
+            return;
+        }
+
+        if (calificacion == 0) {
+
+            alert("Selecciona una calificación");
+            return;
+        }
+
+        fetch('/Home/GuardarTestimonio', {
+
+            method: 'POST',
+
+            headers: {
+                'Content-Type':
+                    'application/x-www-form-urlencoded'
+            },
+
+            body:
+                'mensaje=' +
+                encodeURIComponent(message)
+                +
+                '&calificacion=' +
+                calificacion
+
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            if (data.success) {
+
+                alert("Testimonio enviado correctamente");
+
+                location.reload();
+            }
+            else {
+
+                alert("Debes iniciar sesión");
+
+                window.location =
+                    '/Auth/Login';
+            }
+
+        });
+    }
+
+    window.onclick = function (event) {
+
+        const modal =
+            document.getElementById("testimonialModal");
+
+        if (event.target === modal) {
+
+            closeModal();
+        }
+    };
+
 </script>

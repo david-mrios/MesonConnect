@@ -2,16 +2,14 @@
     ViewData["Title"] = "El Mesón de la Tía";
 }
 
-<div class="alert alert-info">
-    Estado de SQL Server: <strong>@ViewBag.CanConnect</strong>
-</div>
+@model List<MesonConnect.Models.Platillo>
 
 
 @await Html.PartialAsync("_Hero")
 @await Html.PartialAsync("_About")
 @await Html.PartialAsync("_WhyUs")
 @await Html.PartialAsync("_Stats")
-@await Html.PartialAsync("_Menu")
+@Html.Partial("_Menu", Model)
 @await Html.PartialAsync("_Testimonials")
 @await Html.PartialAsync("_Events")
 @await Html.PartialAsync("_Chefs")

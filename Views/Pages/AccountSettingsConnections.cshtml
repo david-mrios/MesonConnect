@@ -1,0 +1,175 @@
+@{
+    ViewData["Title"] = "Gestión de Promociones";
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="nav-align-top">
+            <ul class="nav nav-pills flex-column flex-md-row mb-6 gap-md-0 gap-2">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="AccountSettings">
+                        <i class="icon-base bx bx-message-square-detail icon-sm me-1_5"></i>
+                        Testimonios
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="AccountSettingsNotifications">
+                        <i class="icon-base bx bx-cart icon-sm me-1_5"></i>
+                        Pedidos
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="AccountSettingsConnections">
+                        <i class="icon-base bx bx-purchase-tag-alt icon-sm me-1_5"></i>
+                        Promociones
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="card">
+
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="mb-1">Gestión de Promociones</h5>
+                    <p class="mb-0 card-subtitle">
+                        Administra las promociones disponibles en tu plataforma.
+                    </p>
+                </div>
+
+                <button class="btn btn-success">
+                    <i class="bx bx-plus"></i>
+                    Nueva Promoción
+                </button>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row mb-4">
+
+                    <div class="col-md-4">
+                        <label class="form-label">Filtrar por Estado</label>
+                        <select class="form-select">
+                            <option>Todos</option>
+                            <option>Activas</option>
+                            <option>Programadas</option>
+                            <option>Finalizadas</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Buscar Promoción</label>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Nombre de la promoción">
+                    </div>
+
+                </div>
+
+                <div class="table-responsive">
+
+                    <table class="table table-bordered table-hover align-middle">
+
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Promoción</th>
+                                <th>Descuento</th>
+                                <th>Fecha Inicio</th>
+                                <th>Fecha Fin</th>
+                                <th>Usos</th>
+                                <th>Estado</th>
+                                <th width="250">Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>1</td>
+                                <td>Black Friday</td>
+                                <td>50%</td>
+                                <td>01/11/2026</td>
+                                <td>30/11/2026</td>
+                                <td>150</td>
+
+                                <td>
+                                    <span class="badge bg-success">
+                                        Activa
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <button class="btn btn-primary btn-sm">
+                                        Editar
+                                    </button>
+
+                                    <button class="btn btn-warning btn-sm">
+                                        Desactivar
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>2</td>
+                                <td>Navidad 2026</td>
+                                <td>30%</td>
+                                <td>20/12/2026</td>
+                                <td>31/12/2026</td>
+                                <td>0</td>
+
+                                <td>
+                                    <span class="badge bg-info">
+                                        Programada
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <button class="btn btn-primary btn-sm">
+                                        Editar
+                                    </button>
+
+                                    <button class="btn btn-danger btn-sm">
+                                        Eliminar
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>3</td>
+                                <td>Verano</td>
+                                <td>20%</td>
+                                <td>01/06/2026</td>
+                                <td>30/06/2026</td>
+                                <td>89</td>
+
+                                <td>
+                                    <span class="badge bg-secondary">
+                                        Finalizada
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <button class="btn btn-primary btn-sm">
+                                        Ver
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

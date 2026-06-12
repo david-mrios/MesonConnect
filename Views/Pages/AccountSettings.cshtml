@@ -1,0 +1,172 @@
+﻿@model IEnumerable<MesonConnect.Models.Testimonio>
+
+@{
+    ViewData["Title"] = "Gestión de Testimonios";
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="nav-align-top">
+            <ul class="nav nav-pills flex-column flex-md-row mb-6 gap-md-0 gap-2">
+
+                <li class="nav-item">
+                    <a class="nav-link active" asp-controller="Admin" asp-action="AccountSettings">
+                        <i class="icon-base bx bx-message-square-detail icon-sm me-1_5"></i>
+                        Testimonios
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Admin" asp-action="AccountSettingsNotifications">
+                        <i class="icon-base bx bx-cart icon-sm me-1_5"></i>
+                        Pedidos
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Admin" asp-action="AccountSettingsConnections">
+                        <i class="icon-base bx bx-purchase-tag-alt icon-sm me-1_5"></i>
+                        Promociones
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="card mb-6">
+
+            <div class="card-body">
+
+                <h5 class="mb-4">Gestión de Testimonios</h5>
+
+                <div class="row mb-4">
+
+                    <div class="col-md-3">
+                        <label class="form-label">Filtrar por estado</label>
+
+                        <select class="form-select"
+                                onchange="location.href='?estado=' + this.value">
+
+                            <option value="">Todos</option>
+                            <option value="pendiente">Pendientes</option>
+                            <option value="aprobado">Aprobados</option>
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="table-responsive">
+
+                    <table class="table table-bordered table-hover align-middle">
+
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Foto</th>
+                                <th>Nombre</th>
+                                <th>Tipo</th>
+                                <th>Testimonio</th>
+                                <th>Calificación</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @if (Model != null && Model.Any())
+                            {
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+
+                                        <td>@item.IdTestimonio</td>
+
+                                        <td>
+                                            <img src="~/img/avatars/1.png"
+                                                 width="50"
+                                                 height="50"
+                                                 class="rounded-circle" />
+                                        </td>
+
+                                        <td>@item.Cliente?.nombre</td>
+
+                                        <td>Cliente</td>
+
+                                        <td>@item.Mensaje</td>
+
+                                        <td>
+                                            @for (int i = 0; i < item.Calificacion; i++)
+                                            {
+                                                <span>⭐</span>
+                                            }
+                                        </td>
+
+                                        <td>
+
+                                            @if (item.Estado)
+                                            {
+                                                <span class="badge bg-success">
+                                                    Aprobado
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-warning">
+                                                    Pendiente
+                                                </span>
+                                            }
+
+                                        </td>
+
+                                        <td>
+
+                                            @if (!item.Estado)
+                                            {
+                                                <a asp-controller="Admin"
+                                                   asp-action="AprobarTestimonio"
+                                                   asp-route-id="@item.IdTestimonio"
+                                                   class="btn btn-success btn-sm">
+
+                                                    <i class="bx bx-check"></i>
+                                                    Aprobar
+                                                </a>
+                                            }
+
+                                            <a asp-controller="Admin"
+                                               asp-action="EliminarTestimonio"
+                                               asp-route-id="@item.IdTestimonio"
+                                               class="btn btn-danger btn-sm">
+
+                                                <i class="bx bx-trash"></i>
+                                                Eliminar
+                                            </a>
+
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="8" class="text-center">
+                                        No hay testimonios registrados
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

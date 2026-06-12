@@ -1,19 +1,32 @@
-using Microsoft.EntityFrameworkCore; // Necesario para UseSqlServer
-using MesonConnect.Models;      // Asegúrate de que este sea el namespace de tu ApplicationDbContext
+using Microsoft.EntityFrameworkCore;
+using MesonConnect.Models;
+using Microsoft.AspNetCore.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Configurar la conexión a SQL Server
+// Conexión SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Add services to the container.
+// MVC
 builder.Services.AddControllersWithViews();
+
+// Session
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromHours(12);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
-// ... el resto de tu código (UseStaticFiles, UseRouting, etc.) queda igual ...
-
+// Pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -21,8 +34,13 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
+
 app.UseRouting();
+
+app.UseSession();
+
 app.UseAuthorization();
 
 app.MapControllerRoute(

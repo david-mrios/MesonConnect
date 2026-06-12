@@ -1,0 +1,195 @@
+@{
+    ViewData["Title"] = "Gestión de Pedidos";
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="nav-align-top">
+            <ul class="nav nav-pills flex-column flex-md-row mb-6 gap-md-0 gap-2">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="AccountSettings">
+                        <i class="icon-base bx bx-message-square-detail icon-sm me-1_5"></i>
+                        Testimonios
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="AccountSettingsNotifications">
+                        <i class="icon-base bx bx-cart icon-sm me-1_5"></i>
+                        Pedidos
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="AccountSettingsConnections">
+                        <i class="icon-base bx bx-purchase-tag-alt icon-sm me-1_5"></i>
+                        Promociones
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="card">
+
+            <div class="card-header">
+                <h5 class="mb-1">Gestión de Pedidos</h5>
+                <p class="mb-0 card-subtitle">
+                    Visualiza y administra los pedidos realizados por tus clientes.
+                </p>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row mb-4">
+
+                    <div class="col-md-4">
+                        <label class="form-label">Filtrar por Estado</label>
+                        <select class="form-select">
+                            <option>Todos</option>
+                            <option>Pendiente</option>
+                            <option>En Proceso</option>
+                            <option>Completado</option>
+                            <option>Cancelado</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Buscar Cliente</label>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Nombre del cliente">
+                    </div>
+
+                </div>
+
+                <div class="table-responsive">
+
+                    <table class="table table-bordered table-hover align-middle">
+
+                        <thead class="table-light">
+                            <tr>
+                                <th># Pedido</th>
+                                <th>Cliente</th>
+                                <th>Correo</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Total</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th width="220">Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>#1001</td>
+                                <td>Juan Pérez</td>
+                                <td>juan@email.com</td>
+                                <td>Landing Page Premium</td>
+                                <td>1</td>
+                                <td>$250</td>
+                                <td>01/06/2026</td>
+
+                                <td>
+                                    <span class="badge bg-warning">
+                                        Pendiente
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <button class="btn btn-primary btn-sm">
+                                        Ver
+                                    </button>
+
+                                    <button class="btn btn-success btn-sm">
+                                        Completar
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>#1002</td>
+                                <td>María López</td>
+                                <td>maria@email.com</td>
+                                <td>Tienda Online</td>
+                                <td>1</td>
+                                <td>$500</td>
+                                <td>01/06/2026</td>
+
+                                <td>
+                                    <span class="badge bg-info">
+                                        En Proceso
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <button class="btn btn-primary btn-sm">
+                                        Ver
+                                    </button>
+
+                                    <button class="btn btn-success btn-sm">
+                                        Completar
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>#1003</td>
+                                <td>Carlos Rodríguez</td>
+                                <td>carlos@email.com</td>
+                                <td>Sistema de Reservas</td>
+                                <td>1</td>
+                                <td>$800</td>
+                                <td>01/06/2026</td>
+
+                                <td>
+                                    <span class="badge bg-success">
+                                        Completado
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <button class="btn btn-primary btn-sm">
+                                        Ver
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>#1004</td>
+                                <td>Ana Gómez</td>
+                                <td>ana@email.com</td>
+                                <td>Aplicación Web</td>
+                                <td>1</td>
+                                <td>$1200</td>
+                                <td>01/06/2026</td>
+
+                                <td>
+                                    <span class="badge bg-danger">
+                                        Cancelado
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <button class="btn btn-primary btn-sm">
+                                        Ver
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

@@ -20,3 +20,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+.menu-img {
+    width: 100%;
+    height: 220px; /* mismo alto para todas */
+    object-fit: cover; /* recorta sin deformar */
+    border-radius: 12px; /* opcional (bonito estilo) */
+}
