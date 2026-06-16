@@ -4,9 +4,149 @@
     @{
         var usuario = Context.Session.GetString("Usuario");
         var pedidos = ViewBag.Pedidos as List<Pedido>;
+
     }
 
     <section id="contact" class="contact section">
+
+
+    <!-- RESERVAS -->
+
+        <div class="container section-title" data-aos="fade-up">
+            <h2>Reservaciones</h2>
+            <p>
+                <span>Almorzá/Cená</span>
+            <span class="description-title">con Nosotros</span>
+            </p>
+        </div>
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+            <div class="row g-4">
+
+                <div class="col-lg-4">
+
+                    <div class="reservation-info">
+
+                        <h3>Información</h3>
+
+                        <p>
+                            Complete el formulario y nuestro equipo confirmará
+                            la disponibilidad de su mesa.
+                        </p>
+
+                        <div class="info-item">
+                            <strong>📍 Dirección</strong>
+                            <p>
+                                semaforos de donde fue el hosp. velez paiz 1c al sur, 80 vrs. abajo M/i, Managua, Nicaragua, Ciudad Sandino, Nicaragua
+                            </p>
+                        </div>
+
+                        <div class="info-item">
+                            <strong>
+                                <i class="bi bi-whatsapp" style="color:#25D366;"></i>
+                                WhatsApp
+                            </strong>
+
+                            <p>
+                                <a href="https://wa.me/50583675146?text=Hola,%20quiero%20hacer%20una%20reserva"
+                                   target="_blank"
+                                   style="color:#25D366;text-decoration:none;font-weight:600;">
+                                    +505 8367-5146
+                                </a>
+                            </p>
+                        </div>
+
+                        <div class="info-item">
+                            <strong>🕒 Horario</strong>
+                            <p>11:00 AM - 10:00 PM</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-8">
+
+                <form id="formReserva">
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+                            <input type="text"
+                                   id="nombre"
+                                   class="form-control"
+                                   placeholder="Nombre Completo">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                            <input type="tel"
+                                   id="telefono"
+                                   class="form-control"
+                                   placeholder="Teléfono">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                            <input type="email"
+                                   id="correo"
+                                   class="form-control"
+                                   placeholder="Correo Electrónico">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                            <select id="personas" class="form-select">
+                                <option>Cantidad de Personas</option>
+                                    <option>1 Persona</option>
+                                    <option>2 Personas</option>
+                                    <option>3 Personas</option>
+                                    <option>4 Personas</option>
+                                    <option>5 Personas</option>
+                                    <option>6 Personas</option>
+                                    <option>Más de 6 Personas</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                            <input type="date"
+                                   id="fecha"
+                                   class="form-control">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                            <input type="time"
+                                   id="hora"
+                                   class="form-control">
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+                        <textarea id="comentarios"
+                                  class="form-control"
+                                  rows="5"
+                                  placeholder="Comentarios adicionales"></textarea>
+                        </div>
+
+                        <div class="text-center">
+                        <button type="button"
+                                class="btn-reserva-form"
+                                onclick="enviarReserva()">
+                            Solicitar Reserva
+                        </button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    
+
+
+
 
         <div class="container section-title">
             <h2>Mi Cuenta</h2>
@@ -196,11 +336,60 @@
 
         </div>
 
-    </section>
+</section>
 
 
 
     <style>
+    .book-a-table {
+        padding: 80px 0;
+    }
+
+    .reservation-info {
+        background: #fff;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 5px 25px rgba(0,0,0,.08);
+        height: 100%;
+    }
+
+        .reservation-info h3 {
+            margin-bottom: 20px;
+            color: #ce1212;
+        }
+
+    .info-item {
+        margin-top: 20px;
+    }
+
+    .book-a-table form {
+        background: #fff;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 5px 25px rgba(0,0,0,.08);
+    }
+
+    .book-a-table .form-control,
+    .book-a-table .form-select {
+        padding: 12px;
+        border-radius: 10px;
+    }
+
+    .btn-reserva-form {
+        background: #ce1212;
+        color: white;
+        border: none;
+        padding: 12px 35px;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: .3s;
+    }
+
+        .btn-reserva-form:hover {
+            background: #b01010;
+            transform: translateY(-2px);
+        }
+
 
         .pedidos-scroll tbody {
             display: block;
@@ -285,5 +474,47 @@
                 text: 'Error al conectar con el servidor'
             });
         });
+    }
+
+        async function enviarReserva() {
+
+        const reserva = {
+            nombre: document.getElementById("nombre").value,
+            telefono: document.getElementById("telefono").value,
+            correo: document.getElementById("correo").value,
+            personas: document.getElementById("personas").value,
+            fecha: document.getElementById("fecha").value,
+            hora: document.getElementById("hora").value,
+            comentarios: document.getElementById("comentarios").value
+        };
+
+        const response = await fetch('/Home/EnviarReserva', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(reserva)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Reserva enviada',
+                text: 'Nos pondremos en contacto contigo'
+            });
+
+            document.getElementById("formReserva").reset();
+
+        } else {
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: data.message
+            });
+        }
     }
 </script>

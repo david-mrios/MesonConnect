@@ -29,9 +29,17 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YSMJ15LSSZ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-YSMJ15LSSZ');
+    </script>
+
 </head>
-
-
 
 <body class="@ViewData["BodyClass"]">
 
@@ -81,7 +89,7 @@
 
             <hr>
 
-            <h5>Total: $<span id="cartTotal">0.00</span></h5>
+            <h5>Total: C$<span id="cartTotal">0.00</span></h5>
 
             <button class="btn btn-success w-100 mt-2"
                     onclick="realizarPedido()">
@@ -110,23 +118,25 @@
 
                 total += item.price * item.cantidad;
 
-                list.innerHTML += `
-                    <li>
-                        ${item.name} - C$${item.price.toFixed(2)}
+        list.innerHTML += `
+            <li>
+                ${item.name} (${item.cantidad}x)
+                - C$${(item.price * item.cantidad).toFixed(2)}
 
-                        <button type="button"
-                                onclick="removeItem(${item.cartId})">
-                            🗑
-                        </button>
-                    </li>
-                `;
+                     <button type="button"
+                class="cart-delete-btn"
+                onclick="removeItem(${item.cartId})">
+            <i class="bi bi-trash"></i>
+        </button>
+            </li>
+        `;
             });
 
             document.getElementById("cartTotal").innerText =
                 total.toFixed(2);
 
-            document.getElementById("cartCount").innerText =
-                cart.length;
+         document.getElementById("cartCount").innerText =
+        cart.reduce((total, item) => total + item.cantidad, 0);
         }
 
         function removeItem(id) {
@@ -135,29 +145,61 @@
 
             updateCart();
 
-            Swal.fire({
-                icon: 'success',
-                title: 'Producto eliminado',
-                timer: 1200,
-                showConfirmButton: false
-            });
+                Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: 'Producto agregado',
+            text: `${cantidad} x ${e.target.dataset.name}`,
+            showConfirmButton: false,
+            timer: 1800,
+            timerProgressBar: true
+        });
         }
 
         window.removeItem = removeItem;
 
         document.addEventListener("click", function (e) {
 
+            if (e.target.classList.contains("qty-plus")) {
+
+                let input = e.target.parentElement.querySelector(".qty-input");
+                input.value = parseInt(input.value) + 1;
+            }
+
+            if (e.target.classList.contains("qty-minus")) {
+
+                let input = e.target.parentElement.querySelector(".qty-input");
+
+                if (parseInt(input.value) > 1) {
+                    input.value = parseInt(input.value) - 1;
+                }
+            }
+
             if (e.target.classList.contains("add-to-cart")) {
 
-                let item = {
-                    cartId: Date.now(),
-                    platilloId: parseInt(e.target.dataset.id),
-                    name: e.target.dataset.name,
-                    price: parseFloat(e.target.dataset.price),
-                    cantidad: 1
-                };
+                let cantidad = parseInt(
+                    e.target.parentElement.querySelector(".qty-input")?.value || 1
+                );
 
-                cart.push(item);
+              let platilloId = parseInt(e.target.dataset.id);
+
+        let existente = cart.find(x => x.platilloId === platilloId);
+
+        if (existente) {
+
+            existente.cantidad += cantidad;
+
+        } else {
+
+            cart.push({
+                cartId: Date.now(),
+                platilloId: platilloId,
+                name: e.target.dataset.name,
+                price: parseFloat(e.target.dataset.price),
+                cantidad: cantidad
+            });
+        }
 
                 updateCart();
 
@@ -168,7 +210,7 @@
                 Swal.fire({
                     icon: 'success',
                     title: 'Agregado al carrito',
-                    text: item.name,
+                    text: `${cantidad} x ${e.target.dataset.name}`,
                     timer: 1500,
                     showConfirmButton: false
                 });
@@ -277,5 +319,72 @@
 
     </script>
 
+    <style> 
+        #cartItems {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+            #cartItems li {
+                background: #fff;
+                border: 1px solid #eee;
+                border-radius: 12px;
+                padding: 12px;
+                margin-bottom: 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                box-shadow: 0 2px 8px rgba(0,0,0,.08);
+            }
+
+        #cartTotal {
+            color: #198754;
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .cart-float-btn {
+            animation: pulseCart 2s infinite;
+        }
+
+        @@keyframes pulseCart {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .cart-delete-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 10px;
+            background: #ff4d4f;
+            color: white;
+            cursor: pointer;
+            transition: .3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .cart-delete-btn:hover {
+                background: #d9363e;
+                transform: scale(1.08);
+            }
+
+    </style>
+
+
 </body>
 </html>
+
+

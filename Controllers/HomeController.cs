@@ -3,7 +3,8 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
-
+using System.Net;
+using System.Net.Mail;
 namespace MesonConnect.Controllers
 
 {
@@ -228,6 +229,59 @@ namespace MesonConnect.Controllers
         {
             public long id { get; set; }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> EnviarReserva([FromBody] ReservaModel model)
+        {
+            try
+            {
+                MailMessage mail = new MailMessage();
+
+                mail.From = new MailAddress("davidmrios29@gmail.com");
+
+                mail.To.Add("davidmrios29@gmail.com");
+
+                mail.Subject = "Nueva Reserva";
+
+                mail.Body =
+        $@"Nombre: {model.Nombre}
+
+Teléfono: {model.Telefono}
+
+Correo: {model.Correo}
+
+Personas: {model.Personas}
+
+Fecha: {model.Fecha}
+
+Hora: {model.Hora}
+
+Comentarios:
+{model.Comentarios}";
+
+                SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
+
+                smtp.Credentials =
+                    new NetworkCredential(
+                        "davidmrios29@gmail.com",
+                        "rzuv nxwf bsyf sink");
+
+                smtp.EnableSsl = true;
+
+                await smtp.SendMailAsync(mail);
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = ex.Message
+                });
+            }
+        }
+
 
         public IActionResult Privacy()
         {

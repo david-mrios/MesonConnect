@@ -29,12 +29,9 @@
     </div>
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="swiper">
+        <div class="swiper testimonial-swiper">
 
             <div class="swiper-wrapper">
-
-                <div class="swiper-wrapper">
 
                     @if (testimonios != null && testimonios.Any())
                     {
@@ -118,8 +115,6 @@
                     }
 
                 </div>
-
-            </div>
 
             <!-- Paginación -->
             <div class="swiper-pagination"></div>
@@ -396,5 +391,28 @@
             closeModal();
         }
     };
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+        new Swiper(".testimonial-swiper", {
+            loop: true,
+            speed: 600,
+
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false
+            },
+
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true
+            },
+
+            slidesPerView: 1,
+            spaceBetween: 20
+        });
+
+    });
 
 </script>
