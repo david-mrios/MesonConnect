@@ -97,7 +97,7 @@ public class AuthController : Controller
             return Json(new { success = false });
         }
 
-        // Aquí enviarás correo
+        // ENVIAR CORREO
         return Json(new { success = true });
     }
 

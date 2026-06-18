@@ -13,7 +13,7 @@ namespace MesonConnect.Models
 
         public decimal total { get; set; }
 
-        public long Cliente_id { get; set; } // si en SQL es int
+        public long Cliente_id { get; set; } 
         public string Estado { get; set; } = "Pendiente";
     }
 }

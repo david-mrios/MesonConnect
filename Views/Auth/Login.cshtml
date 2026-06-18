@@ -6,6 +6,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
 <section class="login-section">
 
     <div class="login-wrapper">
@@ -88,8 +89,8 @@
 
 </section>
 
-<style>
 
+<style>
     .login-section {
         min-height: 90vh;
         display: flex;
@@ -257,7 +258,6 @@
             }
 
 </style>
-
 @if (TempData["ErrorLogin"] != null)
 {
     <script>
@@ -271,20 +271,26 @@
     </script>
 }
 
+
 <script>
     function showSignup() {
-        document.getElementById("loginForm").classList.replace("active", "hidden");
-        document.getElementById("signupForm").classList.replace("hidden", "active");
+        document .getElementById("loginForm").classList.replace("active", "hidden");
+        document .getElementById("signupForm").classList.replace("hidden", "active");
     }
 
     function showLogin() {
-        document.getElementById("signupForm").classList.replace("active", "hidden");
-        document.getElementById("loginForm").classList.replace("hidden", "active");
+        document .getElementById("signupForm").classList.replace("active", "hidden");
+        document .getElementById("loginForm").classList.replace("hidden", "active");
     }
 
-        async function forgotPassword() {
+    async function forgotPassword() {
+        const
 
-        const { value: email } = await Swal.fire({
+    {
+        value: email
+    }
+
+    = await Swal.fire({
             title: 'Recuperar contraseña',
             input: 'email',
             inputLabel: 'Ingresa tu correo',
@@ -294,9 +300,9 @@
             cancelButtonText: 'Cancelar'
         });
 
-        if (!email) return;
+    if (!email) return;
 
-        fetch('/Auth/ForgotPassword', {
+    fetch('/Auth/ForgotPassword', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -305,30 +311,118 @@
                 email: email
             })
         })
-        .then(res => res.json())
-        .then(data => {
+    .then(res => res.json())
+    .then(data => {
 
-            if (data.success) {
+                if (data.success) {
 
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Solicitud enviada',
-                    html: `
-                        Comunícate al número:<br>
-                        <b>83675146</b><br><br>
-                        Hemos notificado al administrador.
-                    `
-                });
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Solicitud enviada',
+                        html: `
+                            Comunícate al número:<br>
+                            <b>83675146</b><br><br>
+                            Hemos notificado al administrador.
+                        `
+                    });
 
-            } else {
+                } else {
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Correo no encontrado'
+                    });
+
+                }
+
+            });
+    }
+
+    async function cancelarPedido(id) {
+        const result = await Swal.fire({
+            title: '¿Cancelar pedido?',
+            text: 'Esta acción no se puede deshacer',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ce1212',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, cancelar',
+            cancelButtonText: 'No'
+        });
+        if (!result.isConfirmed) return;
+        fetch('/Home/CancelarPedido', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: id })
+        }) .then(res => res.json()) .then(data => {
+
+                if (data.success) {
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Pedido cancelado',
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        location.reload();
+                    });
+
+                } else {
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'No se pudo cancelar',
+                        text: data.mensaje || 'Error'
+                    });
+                }
+            }) .catch(err => {
+                console.error(err);
 
                 Swal.fire({
                     icon: 'error',
-                    title: 'Correo no encontrado'
+                    title: 'Error',
+                    text: 'Error al conectar con el servidor'
                 });
+            });
+    }
 
-            }
+    async function enviarReserva() {
+        const reserva =
 
+    {
+        nombre: document.getElementById("nombre").value, telefono: document.getElementById("telefono").value, correo: document.getElementById("correo").value, personas: document.getElementById("personas").value, fecha: document.getElementById("fecha").value, hora: document.getElementById("hora").value, comentarios: document.getElementById("comentarios").value
+    }
+
+    ;
+
+    const response = await fetch('/Home/EnviarReserva', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(reserva)
         });
+
+    const data = await response.json();
+
+    if (data.success) {
+        Swal .fire({
+                icon: 'success',
+                title: 'Reserva enviada',
+                text: 'Nos pondremos en contacto contigo'
+            });
+        document .getElementById("formReserva").reset();
+    }
+
+    else {
+        Swal .fire({
+                icon: 'error',
+                title: 'Error',
+                text: data.message
+            });
+    }
+
     }
 </script>

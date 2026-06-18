@@ -11,6 +11,6 @@
 
         public CategoriaPlatillo? CategoriaPlatillo { get; set; }
 
-        public string? Categoria { get; set; } // opcional
+        public string? Categoria { get; set; } 
     }
 }

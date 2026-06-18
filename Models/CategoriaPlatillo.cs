@@ -6,7 +6,7 @@
 
         public string Descripcion { get; set; } = null!;
 
-        // Relación opcional (MUY recomendada)
+        // RELACION 
         public List<Platillo>? Platillo { get; set; }
     }
 }
